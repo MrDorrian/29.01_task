@@ -29,8 +29,6 @@ function createCardsElement(cards) {
     h2FirstName,
     h2LastName,
   ]);
-  const [icons] = responseData.map((user) => createIcon(user.contacts));
-document.body.append(...icons);
   const article = createElement('article', { classNames: ['cardContainer'] }, [
     img,
     divNames,
@@ -60,7 +58,6 @@ function createCardImage(cards) {
   imageWrapper.append(initials);
   return imageWrapper;
 }
-
 
 function createImage({ profilePicture, firstName, id }) {
   const img = document.createElement('img'); // = new Image();
