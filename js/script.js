@@ -1,7 +1,7 @@
 'use stcrict';
-const randomText =
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur excepturi ab, nostrum qui mollitia et, repudiandae voluptatibus veniam aliquid placeat quas delectus fuga blanditiis, libero eius velit quaerat nulla quis officia. Nam voluptatum deserunt vitae!';
-
+const randomText = [
+  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur excepturi ab, nostrum qui mollitia et, repudiandae voluptatibus veniam aliquid placeat quas delectus fuga blanditiis, libero eius velit quaerat nulla quis officia. Nam voluptatum deserunt vitae!',
+];
 const cardContainer = document.getElementById('root'); // ul
 
 const newCards = responseData.map((cards) => createCardsElement(cards));
@@ -13,7 +13,7 @@ cardContainer.append(...newCards);
  * @returns {HTMLLIElement}
  */
 function createCardsElement(cards) {
-  const { firstName, lastName, profilePicture, contacts } = cards;
+  const { firstName, lastName } = cards;
 
   const p = createElement('p', { classNames: ['cardDescription'] }, [
     document.createTextNode(randomText),
@@ -25,13 +25,15 @@ function createCardsElement(cards) {
     document.createTextNode(lastName),
   ]);
   const img = createCardImage(cards);
-  const div = createElement('div', { classNames: ['nameWarapper'] }, [
+  const divNames = createElement('div', { classNames: ['nameWarapper'] }, [
     h2FirstName,
     h2LastName,
   ]);
+  const [icons] = responseData.map((user) => createIcon(user.contacts));
+document.body.append(...icons);
   const article = createElement('article', { classNames: ['cardContainer'] }, [
     img,
-    div,
+    divNames,
     p,
   ]);
 
@@ -58,6 +60,7 @@ function createCardImage(cards) {
   imageWrapper.append(initials);
   return imageWrapper;
 }
+
 
 function createImage({ profilePicture, firstName, id }) {
   const img = document.createElement('img'); // = new Image();
@@ -100,22 +103,4 @@ function stringToColour(str) {
     colour += ('00' + value.toString(16)).substr(-2);
   }
   return colour;
-}
-/*
-  LIB
-*/
-/**
- *
- * @param {string} type
- * @param {object} options
- * @param {string[]} options.classNames
- * @param {function} options.onClick
- * @param {HTMLElement[]} children
- */
-function createElement(type, { classNames, onClick }, children) {
-  const elem = document.createElement(type);
-  elem.classList.add(...classNames);
-  elem.onclick = onClick;
-  elem.append(...children);
-  return elem;
 }
